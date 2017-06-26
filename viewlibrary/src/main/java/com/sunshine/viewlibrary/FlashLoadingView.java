@@ -40,7 +40,7 @@ public class FlashLoadingView extends View {
     CopyOnWriteArrayList<Dot> mDots = new CopyOnWriteArrayList<>();
     Paint mPaint = new Paint();
 
-    LinkedList<List> mQueue = new LinkedList<>();
+    LinkedList<Dot> mQueue = new LinkedList<>();
 
     Thread mThread = new Thread(new Runnable() {
         @Override
@@ -54,7 +54,7 @@ public class FlashLoadingView extends View {
                 }
                 if (!mQueue.isEmpty())
                     synchronized (mQueue) {
-                        mDots.addAll(mQueue.removeFirst());
+                        mDots.add(mQueue.removeFirst());
                     }
                 if (mProgress < targetProgress) {
                     mProgress = mProgress + 0.2f;
@@ -151,10 +151,13 @@ public class FlashLoadingView extends View {
             dot.radius = random(10, maxRadius);
             dot.color = Color.parseColor("#D98719");
             list.add(dot);
+            synchronized (mQueue) {
+                mQueue.addLast(dot);
+            }
         }
-        synchronized (mQueue) {
-            mQueue.add(list);
-        }
+//        synchronized (mQueue) {
+//            mQueue.addFirst(list);
+//        }
     }
 
     int targetProgress = 0;
