@@ -35,7 +35,7 @@ public class FlashLoadingView extends View {
     int mWidth, mHeight;
     float mProgress = 0;
     int minDistance = 5;
-    int maxRadius = 40;
+    int maxRadius = 20;
     Point mCenter;
     CopyOnWriteArrayList<Dot> mDots = new CopyOnWriteArrayList<>();
     Paint mPaint = new Paint();
@@ -148,7 +148,7 @@ public class FlashLoadingView extends View {
             // ALTER: 2017/6/14  可以修改成从进度条进度所在位置的某个半径范围内生成
             Point p = new Point(random(0, mWidth), random(0, mHeight));
             dot.point = p;
-            dot.radius = random(20, maxRadius);
+            dot.radius = random(10, maxRadius);
             dot.color = Color.parseColor("#D98719");
             list.add(dot);
         }
@@ -217,14 +217,25 @@ public class FlashLoadingView extends View {
         // Point mCenter;
         float radius;
         int color;
-        double scale = 0.001;
+        double scale = 0.01;
 
         public Dot(Point mCenter) {
             // this.mCenter = mCenter;
         }
 
         void move() {
-            point.x = (int) (point.x - (point.x - mCenter.x) * scale);
+            if (Math.abs(point.x - mCenter.x) >= minDistance) {
+                point.x = (int) (point.x - (point.x - mCenter.x) * scale);
+            } else {
+//                if (radius <= minDistance) {
+//                    point.x = mCenter.x;
+//                }
+                if (Math.abs(point.x - mCenter.x) != 0) {
+                    point.x = point.x + ((point.x < mCenter.x) ? 1 : -1);
+                    if (radius > 0)
+                        radius = radius - 1;
+                }
+            }
             // TODO: 2017/6/14 靠近 mCenter.x轴位置的点 值直接变成mCenter.x
             point.y = (int) (point.y - (point.y - mCenter.y) * scale);
             scale = scale + 0.001;
@@ -232,13 +243,9 @@ public class FlashLoadingView extends View {
                 radius = radius * 0.99f;
             }
 
-            if (Math.abs(point.x - mCenter.x) != 0 && Math.abs(point.x - mCenter.x) <= radius) {
-                point.x = point.x + ((point.x < mCenter.x) ? minDistance : -minDistance);
-                if (radius > 0)
-                    radius = radius - 1;
-            }
-            if (Math.abs(point.y - mCenter.y) != 0 && Math.abs(point.y - mCenter.y) <= radius) {
-                point.y = point.y + ((point.y < mCenter.y) ? minDistance : -minDistance);
+
+            if (Math.abs(point.y - mCenter.y) != 0 && Math.abs(point.y - mCenter.y) <= minDistance) {
+                point.y = point.y + ((point.y < mCenter.y) ? 1 : -1);
                 if (radius > 0)
                     radius = radius - 1;
             }
