@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
+    android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#f0f0f0"
@@ -9,15 +9,62 @@
     android:orientation="vertical"
     tools:context="com.sunshine.viewhome.MainActivity">
 
-    <com.sunshine.viewlibrary.FlashLoadingView
-        android:id="@+id/flash"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-    <TextView
-        android:id="@+id/add"
-        android:layout_centerInParent="true"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="添加"
-        android:textSize="40sp" />
-</RelativeLayout>
+
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="#555" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="#aaa" />
+
+
+        <ImageView
+            android:id="@+id/tv_button"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="-20dp"
+            android:background="#000" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="#999" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="#666" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="#222" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="#999" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="#666" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="#222" />
+    </LinearLayout>
+
+</ScrollView>
